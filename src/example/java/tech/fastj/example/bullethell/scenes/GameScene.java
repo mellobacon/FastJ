@@ -3,8 +3,8 @@ package tech.fastj.example.bullethell.scenes;
 import tech.fastj.engine.FastJEngine;
 import tech.fastj.math.Maths;
 import tech.fastj.math.Pointf;
-import tech.fastj.graphics.Display;
-import tech.fastj.graphics.Transform2D;
+import tech.fastj.math.Transform2D;
+import tech.fastj.graphics.display.Display;
 import tech.fastj.graphics.game.GameObject;
 import tech.fastj.graphics.game.Model2D;
 import tech.fastj.graphics.game.Polygon2D;
@@ -13,12 +13,9 @@ import tech.fastj.graphics.util.DrawUtil;
 import tech.fastj.graphics.util.ModelUtil;
 
 import tech.fastj.systems.control.Scene;
-import tech.fastj.systems.input.keyboard.KeyboardActionListener;
-import tech.fastj.systems.input.keyboard.Keys;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.event.KeyEvent;
 import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
@@ -30,6 +27,8 @@ import tech.fastj.example.bullethell.scripts.PlayerHealthBar;
 import tech.fastj.example.bullethell.util.FilePaths;
 import tech.fastj.example.bullethell.util.SceneNames;
 import tech.fastj.example.bullethell.util.Tags;
+import tech.fastj.input.keyboard.KeyboardActionListener;
+import tech.fastj.input.keyboard.KeyboardStateEvent;
 
 public class GameScene extends Scene {
 
@@ -73,17 +72,17 @@ public class GameScene extends Scene {
 
         inputManager.addKeyboardActionListener(new KeyboardActionListener() {
             @Override
-            public void onKeyRecentlyPressed(KeyEvent keyEvent) {
-                switch (keyEvent.getKeyCode()) {
-                    case Keys.Q: {
+            public void onKeyRecentlyPressed(KeyboardStateEvent keyEvent) {
+                switch (keyEvent.getKey()) {
+                    case Q: {
                         FastJEngine.log("current bullet count: " + playerCannonScript.getBulletCount());
                         break;
                     }
-                    case Keys.P: {
+                    case P: {
                         FastJEngine.log("current enemy count: " + enemies.size());
                         break;
                     }
-                    case Keys.L: {
+                    case L: {
                         FastJEngine.log("printing enemy statuses...");
                         enemies.values().forEach(FastJEngine::log);
                     }

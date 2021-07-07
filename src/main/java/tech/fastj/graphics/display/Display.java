@@ -1,16 +1,14 @@
-package tech.fastj.graphics;
+package tech.fastj.graphics.display;
 
 import tech.fastj.engine.CrashMessages;
 import tech.fastj.engine.FastJEngine;
 import tech.fastj.math.Point;
 import tech.fastj.math.Pointf;
+import tech.fastj.graphics.Drawable;
 import tech.fastj.graphics.game.GameObject;
 import tech.fastj.graphics.ui.UIElement;
 import tech.fastj.graphics.util.DisplayUtil;
 import tech.fastj.graphics.util.DrawUtil;
-
-import tech.fastj.systems.input.keyboard.Keyboard;
-import tech.fastj.systems.input.mouse.Mouse;
 
 import javax.swing.JFrame;
 import java.awt.Canvas;
@@ -29,6 +27,9 @@ import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.util.LinkedHashMap;
 import java.util.Map;
+
+import tech.fastj.input.keyboard.Keyboard;
+import tech.fastj.input.mouse.Mouse;
 
 /**
  * Class that draws to a screen using a combination of Swing's JFrame, and AWT's Canvas.
@@ -222,6 +223,15 @@ public class Display {
      */
     public Pointf getResolutionScale() {
         return Pointf.divide(viewerResolution.asPointf(), internalResolution.asPointf());
+    }
+
+    /**
+     * Gets the centerpoint of the {@code Display}'s internal resolution.
+     *
+     * @return The centerpoint of the internal resolution as a {@code Pointf}.
+     */
+    public Pointf getScreenCenter() {
+        return Pointf.divide(internalResolution.asPointf(), 2f);
     }
 
     /**
@@ -549,6 +559,16 @@ public class Display {
     public void modifyRenderSettings(RenderingHints.Key renderHintKey, Object renderHintValue) {
         renderHints.remove(renderHintKey);
         renderHints.put(renderHintKey, renderHintValue);
+    }
+
+    /**
+     * Changes the global rendering settings based on the provided option.
+     *
+     * @param renderSetting The {@link RenderSettings} value used to change the global rendering settings.
+     */
+    public void modifyRenderSettings(RenderSettings renderSetting) {
+        renderHints.remove(renderSetting.key);
+        renderHints.put(renderSetting.key, renderSetting.value);
     }
 
     /**
